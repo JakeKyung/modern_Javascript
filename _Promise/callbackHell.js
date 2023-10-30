@@ -1,5 +1,5 @@
 
-const get = url => {
+const getCase_1 = url => {
 	var XMLHttpRequest = require('xhr2');
 	var xhr = new XMLHttpRequest();
 	xhr.open('GET', url);
@@ -14,7 +14,7 @@ const get = url => {
 	};
 };
 
-get('https://jsonplaceholder.typicode.com/posts/1');
+getCase_1('https://jsonplaceholder.typicode.com/posts/1');
 
 /**
 {
@@ -27,3 +27,24 @@ get('https://jsonplaceholder.typicode.com/posts/1');
     'nostrum rerum est autem sunt rem eveniet architecto'
 }
  */
+
+
+
+// onload 이벤트 핸들러는 비동기로 동작, 반환값은 캐치할 수 없다.
+const getCase_2 = url => {
+	var XMLHttpRequest = require('xhr2');
+	var xhr = new XMLHttpRequest();
+	xhr.open('GET', url);
+	xhr.send();
+
+	xhr.onload = () => {
+		if (xhr.status === 200) {
+			return JSON.parse(xhr.response);
+		}
+		console.error(`${xhr.status} ${xhr.statusText}`);
+		
+	};
+};
+
+const response = getCase_2('https://jsonplaceholder.typicode.com/posts/1');
+console.log(response); // undefined
